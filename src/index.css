@@ -1,3 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&family=Sevillana&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.container {
+  @apply w-[90%] max-w-6xl mx-auto;
+}
+
+* {
+  font-family: "Chocolate Classical Sans", sans-serif;
+  font-style: normal;
+}
+
+.title {
+  font-family: "Sevillana", cursive;
+  font-style: normal;
+}
