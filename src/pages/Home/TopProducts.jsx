@@ -26,7 +26,6 @@ export const TopProducts = () => {
       }
       console.log(result?.products);
     } catch (error) {
-      console.error("Error fetching top products:", error);
       setProductData([]);
     } finally {
       setLoadingData(false);

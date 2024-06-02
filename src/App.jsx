@@ -15,12 +15,20 @@ export default function App() {
     try {
       const res = await fetch(`${baseUrl}/shop/${shopId}`);
       if (!res.ok) {
-        throw new Error('Failed to fetch shop details');
+        throw new Error("Failed to fetch shop details");
       }
       const data = await res.json();
+      document.title = data.name;
+      var link = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement("link");
+        link.rel = "icon";
+        document.head.appendChild(link);
+      }
+      link.href = data.shopLogo
       setShopDetails(data);
     } catch (error) {
-      console.error( error);
+      console.error(error);
     }
   }
 
