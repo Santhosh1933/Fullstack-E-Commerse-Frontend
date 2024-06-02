@@ -10,6 +10,14 @@ export function encryptingData(data) {
     import.meta.env.VITE_CRYPTO_SECRET
   ).toString();
 }
+
+export function encryptingShopId(shopId) {
+  return CryptoJS.AES.encrypt(
+    shopId,
+    import.meta.env.VITE_CRYPTO_SECRET
+  ).toString();
+}
+
 export function decryptingData(token) {
   const bytes = CryptoJS.AES.decrypt(token, import.meta.env.VITE_CRYPTO_SECRET);
   const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));

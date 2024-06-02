@@ -1,20 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AuthHook } from "../Recoil/AuthHook";
 import { ShopDetails } from "../Recoil/ShopDetails";
 import { IoMdMenu } from "react-icons/io";
-import {
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  useDisclosure,
-} from "@chakra-ui/react";
+
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "../../Firebase.config";
 import { baseUrl, encryptingData } from "../../Constant";
@@ -22,20 +12,40 @@ import { IoCartOutline } from "react-icons/io5";
 import { BsBagCheck } from "react-icons/bs";
 import { CiShop } from "react-icons/ci";
 import { FaRegUser } from "react-icons/fa6";
-
+import { Button, Drawer, Popover, Space, notification } from "antd";
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const [authHook, setAuth] = useRecoilState(AuthHook);
   const shopDetails = useRecoilValue(ShopDetails);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type) => {
+    api[type]({
+      message: "Login Successful",
+      description: (
+        <div className="text-orange lowercase">
+          Welcome's you {authHook?.name}
+        </div>
+      ),
+      duration: 1,
+    });
+  };
+
+  const showDrawer = () => {
+    setDrawerOpen(true);
+  };
+
+  const hideDrawer = () => {
+    setDrawerOpen(false);
+  };
+
   const menus = [
     {
       id: 1,
       name: (
         <div className="flex items-center gap-2">
-          Shop <CiShop size={18}/>
+          Shop <CiShop size={18} />
         </div>
       ),
       func: () => {
@@ -46,7 +56,7 @@ export const Navbar = () => {
       id: 2,
       name: (
         <div className="flex items-center gap-2">
-          About Us <FaRegUser size={18}/>
+          About Us <FaRegUser size={18} />
         </div>
       ),
       func: () => {
@@ -57,7 +67,7 @@ export const Navbar = () => {
       id: 3,
       name: (
         <div className="flex items-center gap-2">
-          Cart <IoCartOutline size={18}/>
+          Cart <IoCartOutline size={18} />
         </div>
       ),
       func: () => {},
@@ -66,12 +76,21 @@ export const Navbar = () => {
       id: 4,
       name: (
         <div className="flex items-center gap-2">
-          Order <BsBagCheck size={18}/>
+          Order <BsBagCheck size={18} />
         </div>
       ),
       func: () => {},
     },
   ];
+
+  const profileContent = (
+    <div className="flex gap-4 flex-col">
+      <p>Profile</p>
+      <Button type="primary" danger onClick={handleLogout}>
+        Logout
+      </Button>
+    </div>
+  );
 
   async function handleGoogleAuth() {
     const result = await signInWithPopup(auth, googleAuthProvider);
@@ -98,10 +117,22 @@ export const Navbar = () => {
       },
       body: JSON.stringify({ token }),
     });
+    if (res.ok) {
+      openNotificationWithIcon("success");
+    }
+  }
+
+  async function handleLogout() {
+    localStorage.removeItem("token");
+    setAuth({
+      authState: false,
+      email: null,
+    });
   }
 
   return (
-    <div className="bg-white shadow-sm w-full border-b h-[13vh] flex fixed z-50">
+    <div className="bg-white outline-none shadow-sm w-full border-b h-[13vh] flex fixed z-50">
+      {contextHolder}
       <div className="container flex justify-between items-center">
         <div className="flex items-center gap-4">
           <img
@@ -109,11 +140,11 @@ export const Navbar = () => {
             alt=""
             className="w-[40px] cursor-pointer sm:w-[50px]  "
           />
-        <div className="lg:block hidden">
-          <p className="title cursor-pointer text-lg text-center sm:text-2xl text-orange">
-            {shopDetails?.name}
-          </p>
-        </div>
+          <div className="lg:block hidden">
+            <p className="title cursor-pointer text-lg text-center sm:text-2xl text-orange">
+              {shopDetails?.name}
+            </p>
+          </div>
         </div>
         <div className="block lg:hidden">
           <p className="title  cursor-pointer text-lg text-center sm:text-2xl text-orange">
@@ -135,13 +166,15 @@ export const Navbar = () => {
           <div>
             {authHook.authState ? (
               <div>
-                <div className="rounded-full cursor-pointer overflow-hidden">
-                  <img
-                    src={authHook.profileUrl}
-                    alt=""
-                    className="w-[40px] rounded-full hover:scale-105 duration-300"
-                  />
-                </div>
+                <Popover content={profileContent} trigger="click">
+                  <div className="rounded-full cursor-pointer overflow-hidden">
+                    <img
+                      src={authHook.profileUrl}
+                      alt=""
+                      className="w-[40px] rounded-full hover:scale-105 duration-300"
+                    />
+                  </div>
+                </Popover>
               </div>
             ) : (
               <div>
@@ -154,36 +187,24 @@ export const Navbar = () => {
                     alt=""
                     className="w-[20px]"
                   />
-                 <p className="hidden sm:block"> Sign In</p>
+                  <p className="hidden sm:block"> Sign In</p>
                 </button>
               </div>
             )}
           </div>
-        <div className="lg:hidden" ref={btnRef} onClick={onOpen}>
-          <IoMdMenu size={24} />
+          <div className="lg:hidden cursor-pointer" onClick={showDrawer}>
+            <IoMdMenu size={24} />
+          </div>
         </div>
-        </div>
-
       </div>
 
+      {/* Drawer Area */}
+
       <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader className="title text-orange">
-            {shopDetails?.name}
-          </DrawerHeader>
-
-          <DrawerBody></DrawerBody>
-
-          <DrawerFooter></DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+        title={shopDetails?.name}
+        onClose={hideDrawer}
+        open={drawerOpen}
+      ></Drawer>
     </div>
   );
 };
