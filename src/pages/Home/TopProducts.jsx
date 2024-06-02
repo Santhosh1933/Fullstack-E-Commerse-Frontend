@@ -5,37 +5,16 @@ import { TopProductLayout } from "../../layouts/TopProductLayout";
 import { TopProductCard } from "../../layouts/cards/TopProductCard";
 import { baseUrl, encryptingShopId, shopId } from "../../../Constant";
 import { TopProductCardSkeleton } from "../../layouts/skeletons/TopProductCardSkeleton";
+import { useQuery } from "@tanstack/react-query";
+import { getTopProducts } from "../../../Api";
 
 export const TopProducts = () => {
-  const [loadingData, setLoadingData] = useState(false);
-  const [productData, setProductData] = useState([]);
+  const { data, isLoading, isError, error, refetch } = useQuery({
+    queryKey: ["getTopProducts"],
+    queryFn: getTopProducts,
+  });
 
-  async function getTopProducts() {
-    try {
-      setLoadingData(true);
-      const res = await fetch(
-        `${baseUrl}/getProduct?token=${encryptingShopId(shopId)}&start=0&end=3`
-      );
-
-      if (!res.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const result = await res.json();
-      console.log(result); 
-      setProductData(result.products || []);
-    } catch (error) {
-      console.error('Error fetching top products:', error);
-      setProductData([]);
-    } finally {
-      setLoadingData(false);
-    }
-  }
-
-  useEffect(() => {
-    getTopProducts();
-
-  }, []);
+  console.log({ data, isLoading, isError, error });
 
   return (
     <div className="bg-[#f3fafa]">
@@ -43,16 +22,17 @@ export const TopProducts = () => {
         <Title level={2}>
           <p className="text-orange">Top Selling Products</p>
         </Title>
-        {loadingData ? (
+        {isLoading && (
           <TopProductLayout>
             <TopProductCardSkeleton />
             <TopProductCardSkeleton />
             <TopProductCardSkeleton />
           </TopProductLayout>
-        ) : (
+        )}
+        {data && !isError && (
           <TopProductLayout>
-            {productData.length > 0 ? (
-              productData.map((product, index) => (
+            {data?.products?.length > 0 ? (
+              data?.products?.map((product, index) => (
                 <TopProductCard key={index} product={product} />
               ))
             ) : (

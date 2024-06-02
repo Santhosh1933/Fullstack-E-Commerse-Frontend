@@ -11,7 +11,7 @@ export function encryptingData(data) {
   ).toString();
 }
 
-export function encryptingShopId(shopId) {
+export function encryptingShopId() {
   return CryptoJS.AES.encrypt(
     shopId,
     import.meta.env.VITE_CRYPTO_SECRET
