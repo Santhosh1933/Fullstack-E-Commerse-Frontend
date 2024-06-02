@@ -29,5 +29,7 @@ export const bannerImg =
 
 export const shopId = "665850202866c796ae499381";
 
-// export const baseUrl = "https://fullstack-e-commerse-backend.onrender.com";
-export const baseUrl = "http://localhost:8000";
+export const baseUrl =
+  import.meta.env.VITE_IS_DEVELOPMENT == "true"
+    ? "http://localhost:8000"
+    : "https://fullstack-e-commerse-backend.onrender.com";
