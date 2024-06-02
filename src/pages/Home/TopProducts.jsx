@@ -3,29 +3,29 @@ import { Typography } from "antd";
 const { Title } = Typography;
 import { TopProductLayout } from "../../layouts/TopProductLayout";
 import { TopProductCard } from "../../layouts/cards/TopProductCard";
-import { useRecoilValue } from "recoil";
-import { AuthHook } from "../../Recoil/AuthHook";
 import { baseUrl, encryptingShopId, shopId } from "../../../Constant";
 import { TopProductCardSkeleton } from "../../layouts/skeletons/TopProductCardSkeleton";
 
 export const TopProducts = () => {
   const [loadingData, setLoadingData] = useState(false);
   const [productData, setProductData] = useState([]);
-  
+
   async function getTopProducts() {
     try {
       setLoadingData(true);
       const res = await fetch(
         `${baseUrl}/getProduct?token=${encryptingShopId(shopId)}&start=0&end=3`
       );
-      const result = await res.json();
-      if (Array.isArray(result?.products)) {
-        setProductData(result?.products);
-      } else {
-        setProductData([]);
+
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
       }
-      console.log(result?.products);
+
+      const result = await res.json();
+      console.log(result); 
+      setProductData(result.products || []);
     } catch (error) {
+      console.error('Error fetching top products:', error);
       setProductData([]);
     } finally {
       setLoadingData(false);
@@ -34,6 +34,7 @@ export const TopProducts = () => {
 
   useEffect(() => {
     getTopProducts();
+
   }, []);
 
   return (
