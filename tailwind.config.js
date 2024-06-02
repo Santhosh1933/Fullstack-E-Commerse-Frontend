@@ -6,8 +6,9 @@ export default {
       transparent: "transparent",
       current: "currentColor",
       red: "#f60014",
-      blue:"#0ea5e9",
-      white:"#ffffff"
+      blue: "#0ea5e9",
+      white: "#ffffff",
+      orange: "#fa6607",
     },
   },
   plugins: [],

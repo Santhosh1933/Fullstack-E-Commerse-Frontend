@@ -101,7 +101,7 @@ export const Navbar = () => {
   }
 
   return (
-    <div className="bg-white shadow-sm w-full border-b py-4 fixed z-50">
+    <div className="bg-white shadow-sm w-full border-b h-[13vh] flex fixed z-50">
       <div className="container flex justify-between items-center">
         <div className="flex items-center gap-4">
           <img
@@ -110,13 +110,13 @@ export const Navbar = () => {
             className="w-[40px] cursor-pointer sm:w-[50px]  "
           />
         <div className="lg:block hidden">
-          <p className="title cursor-pointer text-lg text-center sm:text-2xl text-blue">
+          <p className="title cursor-pointer text-lg text-center sm:text-2xl text-orange">
             {shopDetails?.name}
           </p>
         </div>
         </div>
         <div className="block lg:hidden">
-          <p className="title  cursor-pointer text-lg text-center sm:text-2xl text-blue">
+          <p className="title  cursor-pointer text-lg text-center sm:text-2xl text-orange">
             {shopDetails?.name}
           </p>
         </div>
@@ -126,7 +126,7 @@ export const Navbar = () => {
               <p
                 key={menu.id}
                 onClick={menu.func}
-                className=" cursor-pointer duration-200 hover:text-blue"
+                className=" cursor-pointer duration-200 hover:text-orange"
               >
                 {menu.name}
               </p>
@@ -147,7 +147,7 @@ export const Navbar = () => {
               <div>
                 <button
                   onClick={handleGoogleAuth}
-                  className="flex gap-2 items-center sm:border py-1 px-3 rounded-full shadow-sm hover:border-blue duration-300 hover:shadow-md"
+                  className="flex gap-2 items-center sm:border py-1 px-3 rounded-full shadow-sm hover:border-orange duration-300 hover:shadow-md"
                 >
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/archive/c/c1/20230822192910%21Google_%22G%22_logo.svg"
@@ -175,7 +175,7 @@ export const Navbar = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader className="title text-blue">
+          <DrawerHeader className="title text-orange">
             {shopDetails?.name}
           </DrawerHeader>
 
