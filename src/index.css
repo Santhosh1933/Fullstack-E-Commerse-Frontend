@@ -16,6 +16,14 @@
   font-family: "Sevillana", cursive;
   font-style: normal;
 }
+.translate-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.rm-scrollbar::-webkit-scrollbar{
+  display: none;
+}
 
 
 .loader{

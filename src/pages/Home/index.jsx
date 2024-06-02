@@ -1,6 +1,7 @@
 import React from "react";
 import { Banner } from "./Banner";
 import { TopProducts } from "./TopProducts";
+import { CategoryListing } from "./CategoryListing";
 
 export const HomeIndex = () => {
 
@@ -9,6 +10,7 @@ export const HomeIndex = () => {
       <div className="pt-[13vh]"></div>
       <Banner/>
       <TopProducts/>
+      <CategoryListing/>
     </div>
   );
 };

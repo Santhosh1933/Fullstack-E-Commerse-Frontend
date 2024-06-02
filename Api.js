@@ -12,4 +12,13 @@ async function getTopProducts() {
   const data = await res.json();
   return data;
 }
-export { getShopDetails,getTopProducts };
+async function getCategories() {
+  const res = await fetch(
+    `${baseUrl}/getCategories?token=${encryptingShopId()}`
+  );
+  const data = await res.json();
+  return data;
+}
+
+
+export { getShopDetails,getTopProducts,getCategories };

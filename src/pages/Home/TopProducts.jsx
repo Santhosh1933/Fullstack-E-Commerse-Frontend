@@ -14,7 +14,6 @@ export const TopProducts = () => {
     queryFn: getTopProducts,
   });
 
-  console.log({ data, isLoading, isError, error });
 
   return (
     <div className="bg-[#f3fafa]">
