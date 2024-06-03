@@ -1,4 +1,4 @@
-import { Button, Typography } from "antd";
+import { Button, Empty, Typography } from "antd";
 import React, { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { AuthHook } from "../../Recoil/AuthHook";
@@ -15,9 +15,10 @@ export const TempProducts = () => {
   const authHook = useRecoilValue(AuthHook);
 
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ["Products"],
+    queryKey: ["Products" ,{ start:0, end:4 }],
     queryFn: getTopProducts,
   });
+
 
   useEffect(() => {
     refetch();
@@ -51,10 +52,15 @@ export const TempProducts = () => {
         )}
         {data && !isError && (
           <ProductLayout>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {data?.products?.length > 0 ? (
+              data?.products?.map((product, index) => (
+                <ProductCard key={index} product={product} />
+              ))
+            ) : (
+              <div className="col-span-6">
+                <Empty />
+              </div>
+            )}
           </ProductLayout>
         )}
       </div>

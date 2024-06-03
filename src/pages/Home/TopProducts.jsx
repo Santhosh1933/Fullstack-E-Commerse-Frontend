@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Typography } from "antd";
+import { Empty, Typography } from "antd";
 const { Title } = Typography;
 import { TopProductLayout } from "../../layouts/TopProductLayout";
 import { TopProductCard } from "../../layouts/cards/TopProductCard";
@@ -14,7 +14,7 @@ export const TopProducts = () => {
   const authHook = useRecoilValue(AuthHook)
 
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ["getTopProducts"],
+    queryKey: ["getTopProducts",{ start:0, end:3 }],
     queryFn: getTopProducts,
   });
 
@@ -43,7 +43,9 @@ export const TopProducts = () => {
                 <TopProductCard key={index} product={product} />
               ))
             ) : (
-              <p>No products found.</p>
+              <div className="col-span-6">
+              <Empty />
+            </div>
             )}
           </TopProductLayout>
         )}

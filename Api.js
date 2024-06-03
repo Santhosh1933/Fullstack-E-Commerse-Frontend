@@ -5,9 +5,10 @@ async function getShopDetails() {
   const data = await res.json();
   return data;
 }
-async function getTopProducts() {
+async function getTopProducts({queryKey }) {
+  const {start,end}=queryKey[1]
   const res = await fetch(
-    `${baseUrl}/getProduct?token=${encryptingShopId()}&start=0&end=3`
+    `${baseUrl}/getProduct?token=${encryptingShopId()}&start=${start}&end=${end}`
   );
   const data = await res.json();
   return data;
