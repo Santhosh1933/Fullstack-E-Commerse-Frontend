@@ -2,11 +2,14 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import { ShopDetails } from "../Recoil/ShopDetails";
 import { Button, Typography } from "antd";
-import { ArrowRightOutlined, MailOutlined } from "@ant-design/icons";
+import {
+  ArrowRightOutlined,
+  MailOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
 
 export const Footer = () => {
   const shopDetails = useRecoilValue(ShopDetails);
-  console.log(shopDetails);
 
   return (
     <div className="w-full py-8 border-t border-[#b7b7b7]">
@@ -22,14 +25,25 @@ export const Footer = () => {
         <p>
           {`${shopDetails?.address?.street}, ${shopDetails?.address?.city}, ${shopDetails?.address?.state} ${shopDetails?.address?.postalCode}, ${shopDetails?.address?.country}`}
         </p>
-        <div>
+        <div className="flex sm:justify-between flex-col sm:flex-row items-center">
           <Button
             icon={<MailOutlined />}
             iconPosition={"end"}
             type="link"
             className="flex items-baseline"
           >
-            <a href="">{shopDetails?.contact?.email}</a>
+            <a href={`mailto:${shopDetails?.contact?.email}`}>
+              {shopDetails?.contact?.email}
+            </a>
+          </Button>
+          <Button
+            icon={<PhoneOutlined />}
+            type="link"
+            className="flex items-baseline"
+          >
+            <a href={`tel:${shopDetails?.contact?.phone}`}>
+              {shopDetails?.contact?.phone}
+            </a>
           </Button>
         </div>
       </div>
