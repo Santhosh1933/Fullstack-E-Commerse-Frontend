@@ -4,7 +4,6 @@ import { CustomButton } from "../../components/CustomButton";
 import { Price } from "../../components/Price";
 
 export const ProductCard = (props) => {
-  console.log(props)
   return (
     <div className=" w-full p-0 hover:shadow-md group border border-[#9d9b9b] h-[250px] sm:h-[250px]  cursor-pointer group  overflow-hidden bg-white ease-in-out duration-300 rounded-md">
       <div className="w-full overflow-hidden h-[70%] rounded-sm ">

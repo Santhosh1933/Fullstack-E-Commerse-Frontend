@@ -7,6 +7,7 @@ import { ShopDetails } from "./Recoil/ShopDetails";
 import { useQuery } from "@tanstack/react-query";
 import { getShopDetails } from "../Api";
 import { Loader } from "./assets/Loader";
+import { Footer } from "./pages/Footer";
 
 export default function App() {
   const [shopDetails, setShopDetails] = useRecoilState(ShopDetails);
@@ -35,6 +36,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomeIndex />} />
       </Routes>
+      <Footer/>
     </BrowserRouter>
   );
 }
