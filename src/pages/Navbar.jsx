@@ -12,7 +12,21 @@ import { IoCartOutline } from "react-icons/io5";
 import { BsBagCheck } from "react-icons/bs";
 import { CiShop } from "react-icons/ci";
 import { FaRegUser } from "react-icons/fa6";
-import { Button, Drawer, Popover, Space, notification } from "antd";
+import {
+  Button,
+  ConfigProvider,
+  Drawer,
+  Popover,
+  Space,
+  notification,
+} from "antd";
+import {
+  ArrowRightOutlined,
+  ShopOutlined,
+  ShoppingCartOutlined,
+  ShoppingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -43,42 +57,31 @@ export const Navbar = () => {
   const menus = [
     {
       id: 1,
-      name: (
-        <div className="flex items-center gap-2">
-          Shop <CiShop size={18} />
-        </div>
-      ),
+      name: "Shop",
+      icon: <ShopOutlined />,
       func: () => {
-        console.log("first");
+        navigate("/shop");
+        hideDrawer()
       },
     },
     {
       id: 2,
-      name: (
-        <div className="flex items-center gap-2">
-          About Us <FaRegUser size={18} />
-        </div>
-      ),
+      name: "About Us",
+      icon: <UserOutlined />,
       func: () => {
         console.log("first");
       },
     },
     {
       id: 3,
-      name: (
-        <div className="flex items-center gap-2">
-          Cart <IoCartOutline size={18} />
-        </div>
-      ),
+      name: "Cart",
+      icon: <ShoppingCartOutlined />,
       func: () => {},
     },
     {
       id: 4,
-      name: (
-        <div className="flex items-center gap-2">
-          Order <BsBagCheck size={18} />
-        </div>
-      ),
+      name: "Order",
+      icon: <ShoppingOutlined />,
       func: () => {},
     },
   ];
@@ -134,19 +137,26 @@ export const Navbar = () => {
     <div className="bg-white outline-none shadow-sm w-full border-b h-[13vh] flex fixed z-50">
       {contextHolder}
       <div className="container flex justify-between items-center">
-        <div className="flex items-center gap-4">
+        <div
+          onClick={() => {
+            navigate("/");
+          }}
+          className="flex items-center gap-4"
+        >
           <img
             src={shopDetails?.shopLogo}
             alt=""
             className="w-[40px] cursor-pointer sm:w-[50px]  "
           />
-          <div className="lg:block hidden">
+          <div  className="lg:block hidden">
             <p className="title cursor-pointer text-lg text-center sm:text-2xl text-orange">
               {shopDetails?.name}
             </p>
           </div>
         </div>
-        <div className="block lg:hidden">
+        <div  onClick={() => {
+            navigate("/");
+          }} className="block lg:hidden">
           <p className="title  cursor-pointer text-lg text-center sm:text-2xl text-orange">
             {shopDetails?.name}
           </p>
@@ -154,13 +164,16 @@ export const Navbar = () => {
         <div className=" flex items-center gap-2 lg:gap-8">
           <div className="hidden lg:flex gap-4">
             {menus.map((menu) => (
-              <p
-                key={menu.id}
+              <Button
+                icon={menu.icon}
+                iconPosition={"end"}
+                type="link"
+                className="text-[#000]"
                 onClick={menu.func}
-                className=" cursor-pointer duration-200 hover:text-orange"
+                key={menu.id}
               >
                 {menu.name}
-              </p>
+              </Button>
             ))}
           </div>
           <div>
@@ -200,11 +213,22 @@ export const Navbar = () => {
 
       {/* Drawer Area */}
 
-      <Drawer
-        title={shopDetails?.name}
-        onClose={hideDrawer}
-        open={drawerOpen}
-      ></Drawer>
+      <Drawer title={shopDetails?.name} onClose={hideDrawer} open={drawerOpen}>
+        <div className="flex flex-col justify-start items-start gap-4">
+          {menus.map((menu) => (
+            <Button
+              icon={menu.icon}
+              iconPosition={"end"}
+              type="link"
+              className="text-[#000]"
+              onClick={menu.func}
+              key={menu.id}
+            >
+              {menu.name}
+            </Button>
+          ))}
+        </div>
+      </Drawer>
     </div>
   );
 };

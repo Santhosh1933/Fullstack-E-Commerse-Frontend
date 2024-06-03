@@ -12,7 +12,7 @@ export const Footer = () => {
   const shopDetails = useRecoilValue(ShopDetails);
 
   return (
-    <div className="w-full py-8 border-t border-[#b7b7b7]">
+    <div className="w-full  py-8 border-t border-[#b7b7b7]">
       <div className="container flex flex-col gap-4 text-center justify-center items-center">
         <img src={shopDetails?.shopLogo} alt="" className="h-[60px] w-[60px]" />
         <div>

@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getShopDetails } from "../Api";
 import { Loader } from "./assets/Loader";
 import { Footer } from "./pages/Footer";
+import { ShopIndex } from "./pages/Shop";
 
 export default function App() {
   const [shopDetails, setShopDetails] = useRecoilState(ShopDetails);
@@ -29,14 +30,19 @@ export default function App() {
     }
     link.href = data.shopLogo;
     setShopDetails(data);
-	}
+  }
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomeIndex />} />
-      </Routes>
-      <Footer/>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomeIndex />} />
+            <Route path="/shop" element={<ShopIndex />} />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }
