@@ -7,12 +7,20 @@ import { baseUrl, encryptingShopId, shopId } from "../../../Constant";
 import { TopProductCardSkeleton } from "../../layouts/skeletons/TopProductCardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { getTopProducts } from "../../../Api";
+import { useRecoilValue } from "recoil";
+import { AuthHook } from "../../Recoil/AuthHook";
 
 export const TopProducts = () => {
+  const authHook = useRecoilValue(AuthHook)
+
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["getTopProducts"],
     queryFn: getTopProducts,
   });
+
+  useEffect(()=>{
+    refetch()
+  },[])
 
 
   return (

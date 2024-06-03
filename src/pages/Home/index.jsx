@@ -2,6 +2,7 @@ import React from "react";
 import { Banner } from "./Banner";
 import { TopProducts } from "./TopProducts";
 import { CategoryListing } from "./CategoryListing";
+import { TempProducts } from "./TempProducts";
 
 export const HomeIndex = () => {
 
@@ -11,6 +12,7 @@ export const HomeIndex = () => {
       <Banner/>
       <TopProducts/>
       <CategoryListing/>
+      <TempProducts/>
     </div>
   );
 };

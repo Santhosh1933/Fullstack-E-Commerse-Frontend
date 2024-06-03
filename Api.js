@@ -12,6 +12,13 @@ async function getTopProducts() {
   const data = await res.json();
   return data;
 }
+async function Products() {
+  const res = await fetch(
+    `${baseUrl}/getProduct?token=${encryptingShopId()}`
+  );
+  const data = await res.json();
+  return data;
+}
 async function getCategories() {
   const res = await fetch(
     `${baseUrl}/getCategories?token=${encryptingShopId()}`
@@ -21,4 +28,4 @@ async function getCategories() {
 }
 
 
-export { getShopDetails,getTopProducts,getCategories };
+export { getShopDetails,getTopProducts,getCategories ,Products};
