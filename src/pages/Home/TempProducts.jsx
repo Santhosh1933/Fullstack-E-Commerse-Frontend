@@ -10,10 +10,11 @@ import { ProductLayout } from "../../layouts/ProductLayout";
 import { FaChevronRight } from "react-icons/fa";
 import { ArrowRightOutlined, RightOutlined } from "@ant-design/icons";
 import { ProductCardSkeleton } from "../../layouts/skeletons/ProductCardSkeleton";
+import { useNavigate } from "react-router-dom";
 
 export const TempProducts = () => {
   const authHook = useRecoilValue(AuthHook);
-
+  const navigate = useNavigate()
   const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["Products" ,{ start:0, end:4 }],
     queryFn: getTopProducts,
@@ -38,6 +39,9 @@ export const TempProducts = () => {
             icon={<ArrowRightOutlined />}
             iconPosition={"end"}
             type="link"
+            onClick={() => {
+              navigate("/shop");
+            }}
           >
             View All
           </Button>
