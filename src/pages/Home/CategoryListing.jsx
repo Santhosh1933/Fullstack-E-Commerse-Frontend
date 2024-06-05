@@ -8,7 +8,7 @@ import { CategoryListingCardSkeleton } from "../../layouts/skeletons/CategoryLis
 import { useRecoilValue } from "recoil";
 import { AuthHook } from "../../Recoil/AuthHook";
 
-export const CategoryListing = () => {
+export const CategoryListing = ({categoryName=true}) => {
   const authHook = useRecoilValue(AuthHook)
 
   const { data, isLoading, isError, error, refetch } = useQuery({
@@ -21,10 +21,10 @@ export const CategoryListing = () => {
 
   return (
     <div className="">
-      <div className="container py-8">
-        <Typography.Title level={2}>
+      <div className={categoryName?"container py-8":""}>
+       {categoryName&& <Typography.Title level={2}>
           <p className="text-orange">Categories</p>
-        </Typography.Title>
+        </Typography.Title>}
         {isLoading && (
           <CategoryListingLayout>
             <CategoryListingCardSkeleton />

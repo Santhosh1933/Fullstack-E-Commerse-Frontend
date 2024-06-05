@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { HomeIndex } from "./pages/Home";
 import { Navbar } from "./pages/Navbar";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { ShopDetails } from "./Recoil/ShopDetails";
 import { useQuery } from "@tanstack/react-query";
 import { getShopDetails } from "../Api";
@@ -11,10 +10,10 @@ import { Footer } from "./pages/Footer";
 import { ProductIndex } from "./pages/Products";
 import { IndividualProducts } from "./pages/IndividualProduct";
 import { PageNotFound } from "./pages/PageNotFound";
+import { CartIndex } from "./pages/Cart";
 
 export default function App() {
   const [shopDetails, setShopDetails] = useRecoilState(ShopDetails);
-
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["fetchShopDetails"],
     queryFn: getShopDetails,
@@ -41,7 +40,11 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomeIndex />} />
             <Route path="/products" element={<ProductIndex />} />
-            <Route path="/products/:productName/:productId" element={<IndividualProducts />} />
+            <Route
+              path="/products/:productName/:productId"
+              element={<IndividualProducts />}
+            />
+            <Route path="/cart" element={<CartIndex />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>

@@ -25,12 +25,11 @@ async function Products() {
   return data;
 }
 async function GetProductById({ queryKey }) {
-  const productId = queryKey[1].productId
+  const productId = queryKey[1].productId;
   const res = await fetch(`${baseUrl}/getProductById/${productId}`);
   const data = await res.json();
   return data;
 }
-
 
 async function getCategories() {
   const res = await fetch(`${baseUrl}/getCategories?shopId=${shopId}`);
@@ -38,4 +37,23 @@ async function getCategories() {
   return data;
 }
 
-export { getShopDetails, getTopProducts, getCategories, Products ,GetProductById};
+async function addToCart(data) {
+  const res = await fetch(`${baseUrl}/add-to-cart`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const responseData = await res.json();
+  return responseData;
+}
+
+export {
+  getShopDetails,
+  getTopProducts,
+  getCategories,
+  Products,
+  GetProductById,
+  addToCart
+};

@@ -61,7 +61,7 @@ export const Navbar = () => {
       icon: <ShopOutlined />,
       func: () => {
         navigate("/products");
-        hideDrawer()
+        hideDrawer();
       },
     },
     {
@@ -76,7 +76,10 @@ export const Navbar = () => {
       id: 3,
       name: "Cart",
       icon: <ShoppingCartOutlined />,
-      func: () => {},
+      func: () => {
+        navigate("/cart");
+        hideDrawer();
+      },
     },
     {
       id: 4,
@@ -148,15 +151,18 @@ export const Navbar = () => {
             alt=""
             className="w-[40px] cursor-pointer sm:w-[50px]  "
           />
-          <div  className="lg:block hidden">
+          <div className="lg:block hidden">
             <p className="title cursor-pointer text-lg text-center sm:text-2xl text-orange">
               {shopDetails?.name}
             </p>
           </div>
         </div>
-        <div  onClick={() => {
+        <div
+          onClick={() => {
             navigate("/");
-          }} className="block lg:hidden">
+          }}
+          className="block lg:hidden"
+        >
           <p className="title  cursor-pointer text-lg text-center sm:text-2xl text-orange">
             {shopDetails?.name}
           </p>
@@ -183,8 +189,8 @@ export const Navbar = () => {
                   <div className="rounded-full cursor-pointer overflow-hidden">
                     <img
                       src={authHook.profileUrl}
-                      alt=""
-                      className="w-[40px] rounded-full hover:scale-105 duration-300"
+                      alt="profile"
+                      className="w-[40px] border rounded-full hover:scale-105 duration-300"
                     />
                   </div>
                 </Popover>
