@@ -1,4 +1,4 @@
-import { baseUrl, encryptingShopId, shopId } from "./Constant";
+import { baseUrl, shopId } from "./Constant";
 
 async function getShopDetails() {
   const res = await fetch(`${baseUrl}/shop/${shopId}`);
@@ -11,25 +11,31 @@ async function getTopProducts({ queryKey }) {
     start = queryKey[1].start;
     end = queryKey[1].end;
   }
-  let url = `${baseUrl}/getProduct?token=${encryptingShopId()}&start=${start}&end=${end}`;
+  let url = `${baseUrl}/getProduct?shopId=${shopId}&start=${start}&end=${end}`;
   if (!start && !end) {
-    url = `${baseUrl}/getProduct?token=${encryptingShopId()}`;
+    url = `${baseUrl}/getProduct?shopId=${shopId}`;
   }
   const res = await fetch(url);
   const data = await res.json();
   return data;
 }
 async function Products() {
-  const res = await fetch(`${baseUrl}/getProduct?token=${encryptingShopId()}`);
+  const res = await fetch(`${baseUrl}/getProduct?shopId=${shopId}`);
   const data = await res.json();
   return data;
 }
-async function getCategories() {
-  const res = await fetch(
-    `${baseUrl}/getCategories?token=${encryptingShopId()}`
-  );
+async function GetProductById({ queryKey }) {
+  const productId = queryKey[1].productId
+  const res = await fetch(`${baseUrl}/getProductById/${productId}`);
   const data = await res.json();
   return data;
 }
 
-export { getShopDetails, getTopProducts, getCategories, Products };
+
+async function getCategories() {
+  const res = await fetch(`${baseUrl}/getCategories?shopId=${shopId}`);
+  const data = await res.json();
+  return data;
+}
+
+export { getShopDetails, getTopProducts, getCategories, Products ,GetProductById};

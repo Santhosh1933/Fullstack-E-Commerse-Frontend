@@ -20,11 +20,6 @@ export const TempProducts = () => {
     queryFn: getTopProducts,
   });
 
-
-  useEffect(() => {
-    refetch();
-  }, []);
-
   return (
     <div className="bg-[#f3fafa]">
       <div className="container py-8">
@@ -40,7 +35,7 @@ export const TempProducts = () => {
             iconPosition={"end"}
             type="link"
             onClick={() => {
-              navigate("/shop");
+              navigate("/products");
             }}
           >
             View All

@@ -57,10 +57,10 @@ export const Navbar = () => {
   const menus = [
     {
       id: 1,
-      name: "Shop",
+      name: "Products",
       icon: <ShopOutlined />,
       func: () => {
-        navigate("/shop");
+        navigate("/products");
         hideDrawer()
       },
     },

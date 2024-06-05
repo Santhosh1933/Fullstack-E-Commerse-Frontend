@@ -12,7 +12,7 @@ export const CategoryListingCard = (props) => {
           <p className="text-white line-clamp-2">{props.category.name}</p>
         </Typography.Title>
         <p  onClick={() => {
-            navigate(`/shop?category=${props.category.name}`);
+            navigate(`/products?category=${props.category.name}`);
           }} className="text-orange hover:underline underline-offset-2">
           Explore
         </p>

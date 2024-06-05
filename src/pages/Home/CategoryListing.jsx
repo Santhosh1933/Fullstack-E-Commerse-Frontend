@@ -17,10 +17,6 @@ export const CategoryListing = () => {
   });
 
   
-  useEffect(()=>{
-    refetch()
-  },[])
-
 
 
   return (

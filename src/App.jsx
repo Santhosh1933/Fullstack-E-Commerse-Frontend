@@ -8,7 +8,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getShopDetails } from "../Api";
 import { Loader } from "./assets/Loader";
 import { Footer } from "./pages/Footer";
-import { ShopIndex } from "./pages/Shop";
+import { ProductIndex } from "./pages/Products";
+import { IndividualProducts } from "./pages/IndividualProduct";
+import { PageNotFound } from "./pages/PageNotFound";
 
 export default function App() {
   const [shopDetails, setShopDetails] = useRecoilState(ShopDetails);
@@ -38,7 +40,9 @@ export default function App() {
         <div className="flex-grow">
           <Routes>
             <Route path="/" element={<HomeIndex />} />
-            <Route path="/shop" element={<ShopIndex />} />
+            <Route path="/products" element={<ProductIndex />} />
+            <Route path="/products/:productName/:productId" element={<IndividualProducts />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
         <Footer />
