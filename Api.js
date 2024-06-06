@@ -48,6 +48,17 @@ async function addToCart(data) {
   const responseData = await res.json();
   return responseData;
 }
+async function removeFromCart(data) {
+  const res = await fetch(`${baseUrl}/remove-from-cart`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const responseData = await res.json();
+  return responseData;
+}
 
 async function cartLength(data) {
   const res = await fetch(`${baseUrl}/cart-length`, {
@@ -83,5 +94,6 @@ export {
   GetProductById,
   addToCart,
   cartLength,
-  GetCart
+  GetCart,
+  removeFromCart
 };

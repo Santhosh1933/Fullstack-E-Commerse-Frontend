@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useMemo } from "react";
-import { encryptingData, shopId, baseUrl } from "../../../Constant";
+import { useMemo } from "react";
+import { encryptingData, shopId } from "../../../Constant";
 import { useRecoilValue } from "recoil";
 import { AuthHook } from "../../Recoil/AuthHook";
 import { GetCart } from "../../../Api";
+import { CartPageSkeleton } from "../../layouts/skeletons/CartPageSkeleton";
+import { Empty, Typography } from "antd";
+import { CartCard } from "../../layouts/cards/CartCard";
 
 export const Cart = () => {
   const auth = useRecoilValue(AuthHook);
@@ -21,9 +24,12 @@ export const Cart = () => {
     queryFn: GetCart,
   });
 
-
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <CartPageSkeleton />
+      </div>
+    );
   }
 
   if (isError) {
@@ -33,18 +39,34 @@ export const Cart = () => {
   const cartItems = data?.cart?.items || [];
 
   return (
-    <div className="container">
-      <h2>Cart</h2>
+    <div className="container py-4">
+      <Typography.Title level={2}>
+        <p className="text-orange ">Cart</p>
+      </Typography.Title>
       {cartItems.length === 0 ? (
-        <div>Your cart is empty</div>
+        <div>
+          <Empty />
+        </div>
       ) : (
-        <ul>
-          {cartItems.map((item) => (
-            <li key={item.productId._id}>
-              {item.productId.name} - Quantity: {item.quantity}
-            </li>
-          ))}
-        </ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ul className="grid grid-cols-1 gap-4">
+            <Typography.Title level={4}>
+              <p className="text-orange ">Total Products in Cart : <span className="text-blue ">{cartItems.length}</span></p>
+            </Typography.Title>
+
+            {cartItems.map((item) => (
+              <CartCard key={item._id} item={item} refetch={refetch}/>
+            ))}
+          </ul>
+          <div className="">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
+            repellat at, voluptatum, et nobis veritatis nostrum minima, animi
+            omnis mollitia quos molestiae deleniti quidem. Ullam officia
+            expedita in rerum similique explicabo molestias aperiam harum, quae
+            sit, soluta obcaecati repellendus sint minus laboriosam. A iusto
+            veniam at reprehenderit architecto dolor corrupti.
+          </div>
+        </div>
       )}
     </div>
   );
