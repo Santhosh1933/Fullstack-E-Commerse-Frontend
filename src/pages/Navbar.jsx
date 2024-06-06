@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AuthHook } from "../Recoil/AuthHook";
@@ -7,7 +7,7 @@ import { IoMdMenu } from "react-icons/io";
 
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "../../Firebase.config";
-import { baseUrl, encryptingData } from "../../Constant";
+import { baseUrl, encryptingData, shopId } from "../../Constant";
 import { IoCartOutline } from "react-icons/io5";
 import { BsBagCheck } from "react-icons/bs";
 import { CiShop } from "react-icons/ci";
@@ -27,10 +27,14 @@ import {
   ShoppingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { cartLength } from "../../Api";
+import { CartLengthHook } from "../Recoil/CartLengthHook";
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const [authHook, setAuth] = useRecoilState(AuthHook);
+  const [cartLengthHook,setCartLengthHook] = useRecoilState(CartLengthHook);
   const shopDetails = useRecoilValue(ShopDetails);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [api, contextHolder] = notification.useNotification();
@@ -45,6 +49,23 @@ export const Navbar = () => {
       duration: 1,
     });
   };
+
+  const { mutate, isError, isPending, error, data } = useMutation({
+    mutationFn: cartLength,
+  });
+
+  // useEffect(() => {
+  //   const token = encryptingData({
+  //     email: authHook.email,
+  //     shopId,
+  //   });
+  //   mutate({ token });
+  //   setCartLengthHook({
+  //     cartLength:data,
+  //     mutateFu:mutate
+  //   })
+  // }, []);
+
 
   const showDrawer = () => {
     setDrawerOpen(true);

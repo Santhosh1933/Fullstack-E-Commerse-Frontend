@@ -5,6 +5,7 @@ import { Button, Result } from "antd";
 import { baseUrl, encryptingData } from "../../../Constant";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "../../../Firebase.config";
+import { Cart } from "./Cart";
 
 export const CartIndex = () => {
   const [authHook,setAuth] = useRecoilState(AuthHook);
@@ -56,14 +57,16 @@ export const CartIndex = () => {
                     alt=""
                     className="w-[20px]"
                   />
-                  <p className="hidden sm:block"> Sign In</p>
+                  <p className="block"> Sign In</p>
                 </Button>
               </div>
             }
           />
         </>
       ) : (
-        <div className="container">Cart</div>
+        <div >
+          <Cart/>
+        </div>
       )}
     </div>
   );

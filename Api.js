@@ -49,11 +49,39 @@ async function addToCart(data) {
   return responseData;
 }
 
+async function cartLength(data) {
+  const res = await fetch(`${baseUrl}/cart-length`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  const responseData = await res.json();
+  return responseData;
+}
+
+async function GetCart({ queryKey }) {
+  const token = queryKey[1].token;
+  const res = await fetch(`${baseUrl}/get-cart`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`, 
+    },
+  });
+  const data = await res.json();
+  return data;
+}
+
+
 export {
   getShopDetails,
   getTopProducts,
   getCategories,
   Products,
   GetProductById,
-  addToCart
+  addToCart,
+  cartLength,
+  GetCart
 };
